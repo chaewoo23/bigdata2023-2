@@ -13,7 +13,6 @@ else:
 
     def get_uber_days(date_str):
         days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
-        # 날짜를 파싱하고 요일 코드로 변환
         month, day, year = map(int, date_str.split('/'))
         weekday_code = datetime.date(year, month, day).weekday()
         return days[weekday_code]
@@ -21,7 +20,5 @@ else:
     with open(filename2, 'w') as file2:
         for entry in uberDat:
             base_number, date_str, active_vehicles, trips = entry
-            # get_uber_days 함수를 사용하여 날짜를 계산
-            day_of_week = get_uber_days(date_str)
-            # 출력 형식 변경 및 파일에 쓰기
-            file2.write(f"{base_number},{day_of_week} {active_vehicles},{trips}\n")
+            day_of_date = get_uber_days(date_str)
+            file2.write(f"{base_number},{day_of_date} {active_vehicles},{trips}\n")
