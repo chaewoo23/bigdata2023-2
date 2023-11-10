@@ -16,9 +16,23 @@ else:
         month, day, year = map(int, date_str.split('/'))
         weekday_code = datetime.date(year, month, day).weekday()
         return days[weekday_code]
+    
+    uberDataDict = {}
+    key_days =[]
+    for entry in uberDat:
+        base_number, date_str, active_vehicles, trips = entry
+        day_of_week = get_uber_days(date_str)
+        key = f"{base_number},{day_of_week}"
+
+        if key in uberDataDict:
+            uberDataDict[key][1] += int(active_vehicles)
+            uberDataDict[key][2] += int(trips)  
+        else:
+            uberDataDict[key] = [base_number, int(active_vehicles), int(trips)]
+        
+        for i in key.split(',')[1].split():
+            key_days.append(i)
 
     with open(filename2, 'w') as file2:
-        for entry in uberDat:
-            base_number, date_str, active_vehicles, trips = entry
-            day_of_date = get_uber_days(date_str)
-            file2.write(f"{base_number},{day_of_date} {active_vehicles},{trips}\n")
+        for key, data in uberDataDict.items():
+            file2.write(f"{data[0]},{key_days.pop(0)} {data[1]},{data[2]}\n")
