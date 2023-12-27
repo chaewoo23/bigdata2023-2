@@ -41,7 +41,7 @@ def handwritingTest(trainingDir, testDir):
     
     testFileList = listdir(testDir)
     mTest = len(testFileList)
-    for k in range(1, 10):  # k 값을 1부터 9까지 변화시키면서 에러율 출력
+    for k in range(1, 21):  # k 값을 1부터 20까지 변화시키면서 에러율 출력
         errorCount = 0.0
         for i in range(mTest):
             fileNameStr = testFileList[i]
@@ -52,7 +52,7 @@ def handwritingTest(trainingDir, testDir):
             if classifierResult != classNumStr:
                 errorCount += 1.0
         errorRate = (errorCount / float(mTest)) * 100
-        print(f"If k = {k}, ERRORRATE {errorRate}%")
+        print(int(errorRate))
 
 if __name__ == "__main__":
     import sys
